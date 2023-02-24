@@ -19,5 +19,7 @@ You should then be able to access the application by opening the browser and vis
 http://localhost:3000
 
 To Test the application:
+
 npm test
+
 Let's get started
