@@ -22,5 +22,4 @@ To Test the application:
 
 npm test
 
-
 Let's get started
