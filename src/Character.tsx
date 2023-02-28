@@ -1,23 +1,28 @@
 import { useEffect, useState } from "react";
-import { StarwarsCharacter } from "./starwars_character";
 
 interface CharacterProps {
   url: string;
 }
 const Character: React.FC<CharacterProps> = (props) => {
-  const [characters, setCharacters] = useState<Array<StarwarsCharacter>>([{name: ""}]);
+  const [character, setCharacters] = useState<string>("");
   const [apiLoaded, setAPILoaded] = useState<Boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>();
   const getSwapiResponse = async () => {
     try{
        const apiResponse = await fetch(props.url);
-       const json = (await apiResponse.json()) as {results: StarwarsCharacter[];};
-       setAPILoaded(true);
-       setCharacters(json.results);
+       if (apiResponse.ok) {
+        const json = await apiResponse.json();
+        setAPILoaded(true);
+        setCharacters(json.name);
+       }else{
+        throw new Error();
+       }
+       
     }
     catch(error){
-      if (typeof error === "string") setErrorMessage(error);
-      setAPILoaded(true);
+      setErrorMessage("Oops, failed to fetch!");
+      console.log(error);
+      setAPILoaded(false);
     }
    
   };
@@ -28,13 +33,14 @@ const Character: React.FC<CharacterProps> = (props) => {
   
   return (
     <>
-       {apiLoaded?(<h3>
-      Name: <label>{characters[0].name}</label>
-    </h3>)
-       :(<p>{errorMessage}</p>) }
+      {apiLoaded ? (
+        <h3>
+          Name: <label>{character}</label>
+        </h3>
+      ) : (
+        <p role="alert">{errorMessage}</p>
+      )}
     </>
-   
-    
   );
 };
 

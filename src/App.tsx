@@ -7,7 +7,7 @@ function App()  {
       <header className="App-header">
         <div>
           <h2>Starwar Character</h2>
-          <Character url="https://swapi.dev/api/people/"></Character>
+          <Character url="https://swapi.dev/api/people/1"></Character>
         </div>
       </header>
     </div>
